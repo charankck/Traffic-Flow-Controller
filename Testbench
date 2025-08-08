@@ -1,0 +1,30 @@
+// tb_traffic_light_controller.v
+`timescale 1ns / 1ps
+module tb_traffic_light_controller;
+
+    reg clk;
+    reg reset;
+    wire [2:0] lights;
+
+    // Instantiate the Traffic Light Controller
+    traffic_light_controller uut (
+        .clk(clk),
+        .reset(reset),
+        .lights(lights)
+    );
+
+    // Clock generation (10ns period)
+    always #5 clk = ~clk;
+
+    initial begin
+        // Initialize signals
+        clk = 0;
+        reset = 1;
+
+        // Release reset
+        #10 reset = 0;
+
+        // Run simulation for 200ns
+        #200 $stop;
+    end
+endmodule
